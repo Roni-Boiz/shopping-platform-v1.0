@@ -27,9 +27,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-function Navbar() {
-  const [term, setTerm] = useState('');
-
+function Navbar({term, handleChange}) {
+console.log(term);
   return (
     <Disclosure as="header" className="bg-white shadow">
       {({ open }) => (
@@ -60,6 +59,8 @@ function Navbar() {
                       className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-indigo-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                       placeholder="Search"
                       type="search"
+                      value={term}
+                      onChange = {e => handleChange(e.target.value)}
                     />
                   </div>
                 </div>
