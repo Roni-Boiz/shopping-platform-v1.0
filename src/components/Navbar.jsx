@@ -11,7 +11,7 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Products', href: '#', current: true },
+  { name: 'Products', href: 'ProductList', current: true },
   { name: 'Brands', href: '#', current: false },
   { name: 'Just For You', href: '#', current: false },
   { name: 'Flash Sales', href: '#', current: false },
@@ -19,16 +19,16 @@ const navigation = [
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Track Your Orders', href: '#' },
+  { name: 'Sell Your Items', href: '#' },
   { name: 'Settings', href: '#' },
   { name: 'Sign out', href: '#' },
 ]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-function Navbar({term, handleChange}) {
-console.log(term);
+function Navbar({ term, handleChange }) {
+  console.log(term);
   return (
     <Disclosure as="header" className="bg-white shadow">
       {({ open }) => (
@@ -60,7 +60,7 @@ console.log(term);
                       placeholder="Search"
                       type="search"
                       value={term}
-                      onChange = {e => handleChange(e.target.value)}
+                      onChange={e => handleChange(e.target.value)}
                     />
                   </div>
                 </div>
@@ -80,6 +80,7 @@ console.log(term);
                 <button
                   type="button"
                   className="flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={event =>  window.location.href='/Cart'}
                 >
                   <span className="sr-only">View Cart</span>
                   <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
@@ -122,20 +123,21 @@ console.log(term);
                   </Transition>
                 </Menu>
                 <a
-                  href="#"
-                  className="ml-6 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  href="SignIn"
+                  className="ml-6 inline-flex items-center rounded-md border-2 border-indigo-600 bor px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 shadow-sm focus:outline-none focus:ring-2"
                 >
                   Sign In
                 </a>
                 <a
-                  href="#"
+                  href="SignUp"
                   className="ml-6 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   Create Account
                 </a>
               </div>
             </div>
-            <nav className="hidden lg:flex lg:space-x-8 lg:py-2" aria-label="Global">
+            {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
+            {/* <nav className="hidden lg:flex lg:space-x-8 lg:py-2" aria-label="Global">
               {navigation.map((item) => (
                 <button
                   key={item.name}
@@ -149,6 +151,23 @@ console.log(term);
                 >
                   {item.name}
                 </button>
+              ))}
+            </nav> */}
+            <nav className="-mb-px flex" aria-label="Tabs">
+              {navigation.map((tab) => (
+                <a
+                  key={tab.name}
+                  href={tab.href}
+                  className={classNames(
+                    tab.current
+                      ? 'border-indigo-500 text-indigo-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                    'w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm'
+                  )}
+                  aria-current={tab.current ? 'page' : undefined}
+                >
+                  {tab.name}
+                </a>
               ))}
             </nav>
           </div>
