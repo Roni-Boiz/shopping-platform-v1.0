@@ -1,14 +1,41 @@
-import React from "react";
+import React, {useState} from "react";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Products from "./components/Products";
+import Product from "./components/Product";
+import ProductView from "./components/ProductView";
+import ProductList from "./components/ProductList";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import Cart from "./components/Cart"
 
 function App() {
+
+  const [search, setSearch] = useState('');
+
+  function handleSearch(e) {
+    e.preventDefault();
+    console.log("Process the search")
+  }
   return (
     <>
-      <Navbar />
+      <Navbar 
+        term={search} 
+        handleChange={(value) => setSearch(value)} 
+        handleSearch = {e => handleSearch(e)} 
+      />
       <br />
-      <Products />
+      {/* Term is : {search} */}
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={<ProductList/>} />
+          <Route exact path="/ProductList" element={<ProductList/>} />
+          <Route exact path="/ProductView" element={<ProductView/>} />
+          <Route exact path="/SignIn" element={<SignIn/>} />
+          <Route exact path="/SignUp" element={<SignUp/>} />
+          <Route exact path="/Cart" element={<Cart/>} />
+        </Routes>
+      </BrowserRouter>
       <Footer />
     </>  
   );
