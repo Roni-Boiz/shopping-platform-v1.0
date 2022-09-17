@@ -4,6 +4,9 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
+ 
+
+
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -21,7 +24,7 @@ const userNavigation = [
   { name: 'Track Your Orders', href: '#' },
   { name: 'Sell Your Items', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: '/ProductList',  onClick:true  },
 ]
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -29,6 +32,17 @@ function classNames(...classes) {
 
 function Navbar({ term, handleChange }) {
   console.log(term);
+
+
+  function SignOut() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("firstName");
+    localStorage.removeItem("lastName");
+    localStorage.removeItem("type");
+
+    window.location = "/login";
+  }
+
   return (
     <Disclosure as="header" className="bg-white shadow">
       {({ open }) => (
@@ -87,6 +101,7 @@ function Navbar({ term, handleChange }) {
                 </button>
 
                 {/* Profile dropdown */}
+                { localStorage.getItem("token") && <> 
                 <Menu as="div" className="relative ml-4 flex-shrink-0">
                   <div>
                     <Menu.Button className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -109,6 +124,7 @@ function Navbar({ term, handleChange }) {
                           {({ active }) => (
                             <a
                               href={item.href}
+                              onClick={item.onClick ? SignOut : null}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block py-2 px-4 text-sm text-gray-700'
@@ -121,8 +137,8 @@ function Navbar({ term, handleChange }) {
                       ))}
                     </Menu.Items>
                   </Transition>
-                </Menu>
-                <a
+                </Menu> </>}
+              { !localStorage.getItem("token") && <> <a
                   href="SignIn"
                   className="ml-6 inline-flex items-center rounded-md border-2 border-indigo-600 bor px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 shadow-sm focus:outline-none focus:ring-2"
                 >
@@ -133,7 +149,7 @@ function Navbar({ term, handleChange }) {
                   className="ml-6 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   Create Account
-                </a>
+                </a> </>}
               </div>
             </div>
             {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}

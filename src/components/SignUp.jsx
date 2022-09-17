@@ -1,6 +1,48 @@
-import React from "react";
+import React,{useState} from "react";
+import axios from "axios";
+
 
 function SignUp() {
+    
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [message, setMessage] = useState("");
+    const [loginStatus, setLoginStatus] = useState(true);
+   
+
+    function registerUser(e) {
+        e.preventDefault()
+      
+        const user = {
+          firstName,
+          lastName,
+          email,
+          password,
+        };
+
+        if(password===confirmPassword){ 
+        axios.post("http://localhost:8090/register", user).then((res) => {
+         
+            if (res["data"]["message"] == "success") {
+                setMessage("Registration is Successfully");
+            } else {
+              setMessage("Email is Already Registered");
+            }
+          })
+          .catch((err) => {
+            //sever error
+            console.log(err.message);
+          });
+         }else{
+            setMessage("Username or Password is Not match");
+         }
+         e.target.reset();
+    }
+    
+
     return (
         <>
             <div className="flex min-h-full">
@@ -25,7 +67,8 @@ function SignUp() {
                         <div className="mt-8">
                             <div>
                                 <div className="mt-6">
-                                    <form action="#" method="POST" className="space-y-6">
+                                    {message}
+                                    <form  onSubmit={registerUser} className="space-y-6">
                                         <div className="flex space-x-3">
                                             <div>
                                                 <label htmlFor="fname" className="block text-sm font-medium text-gray-700">
@@ -38,7 +81,8 @@ function SignUp() {
                                                         type="text"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                                    />
+                                                        onChange={(e)=>{setFirstName(e.target.value)}}
+                                                   />
                                                 </div>
                                             </div>
 
@@ -53,6 +97,7 @@ function SignUp() {
                                                         type="text"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                                        onChange={(e)=>{setLastName(e.target.value)}}
                                                     />
                                                 </div>
                                             </div>
@@ -70,6 +115,7 @@ function SignUp() {
                                                     autoComplete="email"
                                                     required
                                                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                                    onChange={(e)=>{setEmail(e.target.value)}}
                                                 />
                                             </div>
                                         </div>
@@ -87,7 +133,8 @@ function SignUp() {
                                                         autoComplete="current-password"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                                    />
+                                                        onChange={(e)=>{setPassword(e.target.value)}}
+                                                  />
                                                 </div>
                                             </div>
 
@@ -103,7 +150,8 @@ function SignUp() {
                                                         autoComplete="current-password"
                                                         required
                                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                                    />
+                                                        onChange={(e)=>{setConfirmPassword(e.target.value)}}
+                                                  />
                                                 </div>
                                             </div>
                                         </div>
