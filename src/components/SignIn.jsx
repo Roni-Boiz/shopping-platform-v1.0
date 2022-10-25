@@ -20,7 +20,7 @@ function SignIn() {
   
     axios.post("http://localhost:8090/login", user).then((res) => {
         //check password and username
-        if (res["data"]["message"] == "success") {
+        if (res["data"]["message"] === "success") {
           const token = res.data.message;
           const firstName = res.data.firstName;
           const lastName = res.data.lastName;
