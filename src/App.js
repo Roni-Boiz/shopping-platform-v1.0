@@ -8,6 +8,9 @@ import ProductList from "./components/ProductList";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Cart from "./components/Cart"
+import SellItems from "./components/SellItems";
+import Profile from "./components/Profile";
+import TrackOrders from "./components/TrackOrders";
 
 function App() {
 
@@ -31,9 +34,12 @@ function App() {
           <Route exact path="/" element={<ProductList/>} />
           <Route exact path="/ProductList" element={<ProductList/>} />
           <Route exact path="/ProductView" element={<ProductView/>} />
-          <Route exact path="/SignIn" element={localStorage.getItem("token") =='success' ?  <ProductList/> : <SignIn/>   } />
-          <Route exact path="/SignUp" element={localStorage.getItem("token") =='success' ?  <ProductList/> : <SignUp/>   }  />
+          <Route exact path="/SignIn" element={localStorage.getItem("token") ==='success' ?  <ProductList/> : <SignIn/>   } />
+          <Route exact path="/SignUp" element={localStorage.getItem("token") ==='success' ?  <ProductList/> : <SignUp/>   }  />
           <Route exact path="/Cart" element={<Cart/>} />
+          <Route exact path="/Profile" element={<Profile/>} />
+          <Route exact path="/TrackOrders" element={<TrackOrders/>} />
+          <Route exact path="/SellItems" element={<SellItems/>} />
         </Routes>
       </BrowserRouter>
       <Footer />
