@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
-
- 
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 
 const user = {
@@ -20,9 +18,9 @@ const navigation = [
   { name: 'Flash Sales', href: '#', current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Track Your Orders', href: '#' },
-  { name: 'Sell Your Items', href: '#' },
+  { name: 'Your Profile', href: 'Profile' },
+  { name: 'Track Your Orders', href: 'TrackOrders' },
+  { name: 'Sell Your Items', href: 'SellItems' },
   { name: 'Settings', href: '#' },
   { name: 'Sign out', href: '/ProductList',  onClick:true  },
 ]
