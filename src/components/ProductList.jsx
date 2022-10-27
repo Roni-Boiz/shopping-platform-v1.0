@@ -1,26 +1,28 @@
 import React from "react";
+import Product from "./Product";
 
 const products = [
-    {
-        id: 1,
-        name: 'Machined Pen',
-        color: 'Black',
-        price: '$35',
-        href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg',
-        imageAlt: 'Black machined steel pen with hexagonal grip and small white logo at top.',
-        availableColors: [
-            { name: 'Black', colorBg: '#111827' },
-            { name: 'Brass', colorBg: '#FDE68A' },
-            { name: 'Chrome', colorBg: '#E5E7EB' },
-        ],
-    },
-    // More products...
+  {
+    id: 1,
+    name: 'Machined Pen',
+    color: 'Black',
+    price: '$35',
+    href: 'ProductView',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg',
+    imageAlt: 'Black machined steel pen with hexagonal grip and small white logo at top.',
+    availableColors: [
+      { name: 'Black', colorBg: '#111827' },
+      { name: 'Brass', colorBg: '#FDE68A' },
+      { name: 'Chrome', colorBg: '#E5E7EB' },
+    ],
+  },
+  // More products...
 ]
 
-function App() {
-    return (
-<div className="bg-white">
+function ProductList() {
+
+  return (
+    <div className="bg-white">
       <div className="lg:mx-auto lg:max-w-7xl lg:px-8">
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-0">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Trending products</h2>
@@ -70,6 +72,7 @@ function App() {
                       </li>
                     ))}
                   </ul>
+                  {/* <Product pro={product} /> */}
                 </li>
               ))}
             </ul>
@@ -87,4 +90,4 @@ function App() {
   );
 }
 
-export default App;
+export default ProductList;

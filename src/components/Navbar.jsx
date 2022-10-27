@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline';
+
 
 const user = {
   name: 'Tom Cook',
@@ -11,24 +12,34 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Products', href: '#', current: true },
+  { name: 'Products', href: 'ProductList', current: true },
   { name: 'Brands', href: '#', current: false },
   { name: 'Just For You', href: '#', current: false },
   { name: 'Flash Sales', href: '#', current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Track Your Orders', href: '#' },
+  { name: 'Your Profile', href: 'Profile' },
+  { name: 'Track Your Orders', href: 'TrackOrders' },
+  { name: 'Sell Your Items', href: 'SellItems' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: '/ProductList',  onClick:true  },
 ]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-function Navbar() {
-  const [term, setTerm] = useState('');
+function Navbar({ term, handleChange }) {
+  console.log(term);
+
+
+  function SignOut() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("firstName");
+    localStorage.removeItem("lastName");
+    localStorage.removeItem("type");
+
+    window.location = "/login";
+  }
 
   return (
     <Disclosure as="header" className="bg-white shadow">
@@ -60,6 +71,8 @@ function Navbar() {
                       className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-indigo-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                       placeholder="Search"
                       type="search"
+                      value={term}
+                      onChange={e => handleChange(e.target.value)}
                     />
                   </div>
                 </div>
@@ -79,12 +92,14 @@ function Navbar() {
                 <button
                   type="button"
                   className="flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={event =>  window.location.href='/Cart'}
                 >
                   <span className="sr-only">View Cart</span>
                   <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
 
                 {/* Profile dropdown */}
+                { localStorage.getItem("token") && <> 
                 <Menu as="div" className="relative ml-4 flex-shrink-0">
                   <div>
                     <Menu.Button className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -107,6 +122,7 @@ function Navbar() {
                           {({ active }) => (
                             <a
                               href={item.href}
+                              onClick={item.onClick ? SignOut : null}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block py-2 px-4 text-sm text-gray-700'
@@ -119,22 +135,23 @@ function Navbar() {
                       ))}
                     </Menu.Items>
                   </Transition>
-                </Menu>
-                <a
-                  href="#"
-                  className="ml-6 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                </Menu> </>}
+              { !localStorage.getItem("token") && <> <a
+                  href="SignIn"
+                  className="ml-6 inline-flex items-center rounded-md border-2 border-indigo-600 bor px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 shadow-sm focus:outline-none focus:ring-2"
                 >
                   Sign In
                 </a>
                 <a
-                  href="#"
+                  href="SignUp"
                   className="ml-6 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   Create Account
-                </a>
+                </a> </>}
               </div>
             </div>
-            <nav className="hidden lg:flex lg:space-x-8 lg:py-2" aria-label="Global">
+            {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
+            {/* <nav className="hidden lg:flex lg:space-x-8 lg:py-2" aria-label="Global">
               {navigation.map((item) => (
                 <button
                   key={item.name}
@@ -148,6 +165,23 @@ function Navbar() {
                 >
                   {item.name}
                 </button>
+              ))}
+            </nav> */}
+            <nav className="-mb-px flex" aria-label="Tabs">
+              {navigation.map((tab) => (
+                <a
+                  key={tab.name}
+                  href={tab.href}
+                  className={classNames(
+                    tab.current
+                      ? 'border-indigo-500 text-indigo-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                    'w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm'
+                  )}
+                  aria-current={tab.current ? 'page' : undefined}
+                >
+                  {tab.name}
+                </a>
               ))}
             </nav>
           </div>
