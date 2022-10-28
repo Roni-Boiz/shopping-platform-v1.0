@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Product from "./Product";
+import { Link } from "react-router-dom";
  
 const products = [];
  
@@ -21,7 +22,7 @@ function ProductList() {
               id: res.data.items[i]['Id'],
               name: res.data.items[i]['Name'],
               price:  "Rs"+res.data.items[i]['Price'],
-              href: "ProductView/"+res.data.items[i]['Id'],
+              href: "../ProductView/"+res.data.items[i]['Id'],
               imageSrc:
               res.data.items[i]['Image'],
               imageAlt:
@@ -76,34 +77,23 @@ function ProductList() {
                     <div className="mt-6">
                       <p className="text-sm text-gray-500">{product.color}</p>
                       <h3 className="mt-1 font-semibold text-gray-900">
-                        <a href={product.href}>
-                          <span className="absolute inset-0" />
-                          {product.name}
-                        </a>
+                         
                       </h3>
                    
 
                       <p className="mt-1 text-gray-900">{product.price}</p>
+                      <div className="sm:flex-col1 mt-10 flex">
+                                    <button
+                                        type="submit"
+                                        className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                                    >
+                                        Add to Cart
+                                    </button>
+                                    </div>
                     </div>
                   </div>
 
-                  {/* <h4 className="sr-only">Available colors</h4>
-                  <ul
-                    role="list"
-                    className="mt-auto flex items-center justify-center space-x-3 pt-6"
-                  >
-                    {product.availableColors.map((color) => (
-                      <li
-                        key={color.name}
-                        className="h-4 w-4 rounded-full border border-black border-opacity-10"
-                        style={{ backgroundColor: color.colorBg }}
-                      >
-                        <span className="sr-only"> {color.name} </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Product pro={product} /> */}
-                </li>
+                    </li>
               ))}
             </ul>
           </div>
