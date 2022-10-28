@@ -2,7 +2,7 @@ const db = require('./db');
 
 async function userLogin(email) {
     const rows = await db.query(
-        `SELECT * FROM login INNER JOIN user ON login.email = user.email  WHERE login.email=?`, [email]);
+        `SELECT * FROM login INNER JOIN user ON login.userName = user.email  WHERE login.userName=?`, [email]);
         
      return rows;
 }

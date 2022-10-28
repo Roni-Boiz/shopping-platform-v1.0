@@ -1,32 +1,54 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Product from "./Product";
-
-const products = [
-  {
-    id: 1,
-    name: 'Machined Pen',
-    color: 'Black',
-    price: '$35',
-    href: 'ProductView',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg',
-    imageAlt: 'Black machined steel pen with hexagonal grip and small white logo at top.',
-    availableColors: [
-      { name: 'Black', colorBg: '#111827' },
-      { name: 'Brass', colorBg: '#FDE68A' },
-      { name: 'Chrome', colorBg: '#E5E7EB' },
-    ],
-  },
-  // More products...
-]
+ 
+const products = [];
+ 
 
 function ProductList() {
+
+  const [items, setItems] = useState([]);
+
+  useEffect(() => getItem, []);
+
+  const getItem = () => {
+    axios.get('http://localhost:8090/items').then(
+      (res) =>{
+         setItems(res.data.items);
+         for(let i = 0; i < res.data.items.length;i++){
+           products.push(
+            {
+              id: res.data.items[i]['Id'],
+              name: res.data.items[i]['Name'],
+              price:  "Rs"+res.data.items[i]['Price'],
+              href: "ProductView/"+res.data.items[i]['Id'],
+              imageSrc:
+              res.data.items[i]['Image'],
+              imageAlt:
+              res.data.items[i]['Description'],
+              availableColors: [
+                { name: "Black", colorBg: "#111827" },
+                { name: "Brass", colorBg: "#FDE68A" },
+                { name: "Chrome", colorBg: "#E5E7EB" },
+              ],
+            } 
+           )
+         }
+      }
+    );
+  };
 
   return (
     <div className="bg-white">
       <div className="lg:mx-auto lg:max-w-7xl lg:px-8">
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-0">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Trending products</h2>
-          <a href="#" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+            Trending products
+          </h2>
+          <a
+            href="#"
+            className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
+          >
             See everything
             <span aria-hidden="true"> &rarr;</span>
           </a>
@@ -39,7 +61,10 @@ function ProductList() {
               className="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:space-x-0"
             >
               {products.map((product) => (
-                <li key={product.id} className="inline-flex w-64 flex-col text-center lg:w-auto">
+                <li
+                  key={product.id}
+                  className="inline-flex w-64 flex-col text-center lg:w-auto"
+                >
                   <div className="group relative">
                     <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200">
                       <img
@@ -56,12 +81,17 @@ function ProductList() {
                           {product.name}
                         </a>
                       </h3>
+                   
+
                       <p className="mt-1 text-gray-900">{product.price}</p>
                     </div>
                   </div>
 
-                  <h4 className="sr-only">Available colors</h4>
-                  <ul role="list" className="mt-auto flex items-center justify-center space-x-3 pt-6">
+                  {/* <h4 className="sr-only">Available colors</h4>
+                  <ul
+                    role="list"
+                    className="mt-auto flex items-center justify-center space-x-3 pt-6"
+                  >
                     {product.availableColors.map((color) => (
                       <li
                         key={color.name}
@@ -72,7 +102,7 @@ function ProductList() {
                       </li>
                     ))}
                   </ul>
-                  {/* <Product pro={product} /> */}
+                  <Product pro={product} /> */}
                 </li>
               ))}
             </ul>
@@ -80,7 +110,10 @@ function ProductList() {
         </div>
 
         <div className="mt-12 flex px-4 sm:hidden">
-          <a href="#" className="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+          <a
+            href="#"
+            className="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
+          >
             See everything
             <span aria-hidden="true"> &rarr;</span>
           </a>

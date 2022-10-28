@@ -32,8 +32,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<ProductList/>} />
-          <Route exact path="/ProductList" element={<ProductList/>} />
-          <Route exact path="/ProductView" element={<ProductView/>} />
+          <Route exact path="/ProductList/" element={<ProductList/>} />
+          <Route exact path="/ProductView/:id" element={<ProductView/>} />
           <Route exact path="/SignIn" element={localStorage.getItem("token") ==='success' ?  <ProductList/> : <SignIn/>   } />
           <Route exact path="/SignUp" element={localStorage.getItem("token") ==='success' ?  <ProductList/> : <SignUp/>   }  />
           <Route exact path="/Cart" element={<Cart/>} />

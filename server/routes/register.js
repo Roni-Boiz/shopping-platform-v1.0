@@ -21,8 +21,7 @@ router.post('/', async function (req, res) {
     await user.getEmails().then(
         (emails) => {
             userEmails = emails
-            console.log(userEmails)
-        }
+         }
     )
 
     for (let i = 0; i < userEmails.length; i++) {

@@ -8,10 +8,10 @@ router.post('/', async function (req, res) {
    
    const email = req.body.email;
    const password = req.body.password;
-
+   
    await login.userLogin(email).then(
       (user) => {
-
+        if(user != null) { 
          const hashedPassword = user[0].password;
          const firstName = user[0].firstName;
          const lastName = user[0].lastname;
@@ -35,7 +35,11 @@ router.post('/', async function (req, res) {
              });
          }
 
-      }
+      }else{
+         return res.json({ 
+            message: "not found"
+          });
+      } }
    ).catch((err) => {
       console.log(err);
      
