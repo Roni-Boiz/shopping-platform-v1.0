@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-    
+
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
+
  
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -32,6 +38,7 @@ function SignIn() {
           window.location = "/ProductList";
         } else {
           setMessage("Username or Password is Not match");
+          NotificationManager.error("Username or Password is Not match", "error");
         }
       })
       .catch((err) => {
@@ -184,6 +191,7 @@ function SignIn() {
           </div>
         </div>
       </div>
+      <NotificationContainer />
     </>
   );
 }

@@ -1,6 +1,11 @@
 import React,{useState} from "react";
 import axios from "axios";
 
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 function SignUp() {
     
@@ -28,8 +33,10 @@ function SignUp() {
          
             if (res["data"]["message"] == "success") {
                 setMessage("Registration is Successfully");
+                NotificationManager.success("Registration is Successfully", "Success");
             } else {
               setMessage("Email is Already Registered");
+              NotificationManager.error("Email is Already Registered", "error");
             }
           })
           .catch((err) => {
@@ -213,6 +220,7 @@ function SignUp() {
                     </div>
                 </div>
             </div>
+            <NotificationContainer />
         </>
     );
 }
