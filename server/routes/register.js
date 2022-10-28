@@ -32,7 +32,7 @@ router.post('/', async function (req, res) {
         }
     }
 
-    if (checkEmail) {
+    if (!checkEmail) {
         await user.register(firstName, lastName, email, hashedPassword).then(
             () => {
                 return res.json({
